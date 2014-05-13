@@ -31,16 +31,22 @@ namespace MinerWars.AppCode.Game.Effects
         readonly EffectHandle m_textureDiffuseForAxisY;
         readonly EffectHandle m_textureNormalMapForAxisXZ;
         readonly EffectHandle m_textureNormalMapForAxisY;
+        readonly EffectHandle m_textureHeightMapForAxisXZ;
+        readonly EffectHandle m_textureHeightMapForAxisY;
 
         readonly EffectHandle m_textureDiffuseForAxisXZ2;
         readonly EffectHandle m_textureDiffuseForAxisY2;
         readonly EffectHandle m_textureNormalMapForAxisXZ2;
         readonly EffectHandle m_textureNormalMapForAxisY2;
+        readonly EffectHandle m_textureHeightMapForAxisXZ2;
+        readonly EffectHandle m_textureHeightMapForAxisY2;
 
         readonly EffectHandle m_textureDiffuseForAxisXZ3;
         readonly EffectHandle m_textureDiffuseForAxisY3;
         readonly EffectHandle m_textureNormalMapForAxisXZ3;
         readonly EffectHandle m_textureNormalMapForAxisY3;
+        readonly EffectHandle m_textureHeightMapForAxisXZ3;
+        readonly EffectHandle m_textureHeightMapForAxisY3;
 
         readonly EffectHandle m_specularIntensity;
         readonly EffectHandle m_specularPower;
@@ -84,16 +90,22 @@ namespace MinerWars.AppCode.Game.Effects
             m_textureDiffuseForAxisY = m_D3DEffect.GetParameter(null, "TextureDiffuseForAxisY");
             m_textureNormalMapForAxisXZ = m_D3DEffect.GetParameter(null, "TextureNormalMapForAxisXZ");
             m_textureNormalMapForAxisY = m_D3DEffect.GetParameter(null, "TextureNormalMapForAxisY");
+            m_textureHeightMapForAxisXZ = m_D3DEffect.GetParameter(null, "TextureHeightMapForAxisXZ");
+            m_textureHeightMapForAxisY = m_D3DEffect.GetParameter(null, "TextureHeightMapForAxisY");
 
             m_textureDiffuseForAxisXZ2 = m_D3DEffect.GetParameter(null, "TextureDiffuseForAxisXZ2");
             m_textureDiffuseForAxisY2 = m_D3DEffect.GetParameter(null, "TextureDiffuseForAxisY2");
             m_textureNormalMapForAxisXZ2 = m_D3DEffect.GetParameter(null, "TextureNormalMapForAxisXZ2");
             m_textureNormalMapForAxisY2 = m_D3DEffect.GetParameter(null, "TextureNormalMapForAxisY2");
+            m_textureHeightMapForAxisXZ2 = m_D3DEffect.GetParameter(null, "TextureHeightMapForAxisXZ2");
+            m_textureHeightMapForAxisY2 = m_D3DEffect.GetParameter(null, "TextureHeightMapForAxisY2");
 
             m_textureDiffuseForAxisXZ3 = m_D3DEffect.GetParameter(null, "TextureDiffuseForAxisXZ3");
             m_textureDiffuseForAxisY3 = m_D3DEffect.GetParameter(null, "TextureDiffuseForAxisY3");
             m_textureNormalMapForAxisXZ3 = m_D3DEffect.GetParameter(null, "TextureNormalMapForAxisXZ3");
             m_textureNormalMapForAxisY3 = m_D3DEffect.GetParameter(null, "TextureNormalMapForAxisY3");
+            m_textureHeightMapForAxisXZ3 = m_D3DEffect.GetParameter(null, "TextureHeightMapForAxisXZ3");
+            m_textureHeightMapForAxisY3 = m_D3DEffect.GetParameter(null, "TextureHeightMapForAxisY3");
 
             m_specularIntensity = m_D3DEffect.GetParameter(null, "SpecularIntensity");
             m_specularPower = m_D3DEffect.GetParameter(null, "SpecularPower");
@@ -165,6 +177,17 @@ namespace MinerWars.AppCode.Game.Effects
                 m_D3DEffect.SetTexture(m_textureNormalMapForAxisY, (Texture)voxelTexture.TextureNormalMapForAxisY);
             }
 
+            if (MyRender.DebugHeightTexture)
+            {
+                m_D3DEffect.SetTexture(m_textureHeightMapForAxisXZ, (Texture)MyRender.GetDebugHeightTexture());
+                m_D3DEffect.SetTexture(m_textureHeightMapForAxisY, (Texture)MyRender.GetDebugHeightTexture());
+            }
+            else
+            {
+                m_D3DEffect.SetTexture(m_textureHeightMapForAxisXZ, (Texture)voxelTexture.TextureHeightMapForAxisXZ);
+                m_D3DEffect.SetTexture(m_textureHeightMapForAxisY, (Texture)voxelTexture.TextureHeightMapForAxisY);
+            }
+
             m_D3DEffect.SetValue(m_specularIntensity, voxelMaterial.SpecularIntensity);
             m_D3DEffect.SetValue(m_specularPower, voxelMaterial.SpecularPower);
         }
@@ -177,10 +200,12 @@ namespace MinerWars.AppCode.Game.Effects
             MyVoxelMaterial voxelMaterial = MyVoxelMaterials.Get(mat0);
             MyVoxelMaterialTextures voxelTexture = voxelMaterial.GetTextures();
 
-            m_D3DEffect.SetTexture(m_textureDiffuseForAxisXZ, (Texture)voxelTexture.TextureDiffuseForAxisXZ);
-            m_D3DEffect.SetTexture(m_textureNormalMapForAxisXZ, (Texture)voxelTexture.TextureNormalMapForAxisXZ);
-            m_D3DEffect.SetTexture(m_textureDiffuseForAxisY, (Texture)voxelTexture.TextureDiffuseForAxisY);
-            m_D3DEffect.SetTexture(m_textureNormalMapForAxisY, (Texture)voxelTexture.TextureNormalMapForAxisY);
+            m_D3DEffect.SetTexture(m_textureDiffuseForAxisXZ, (Texture)MyRender.GetDebugTexture());// (Texture)voxelTexture.TextureDiffuseForAxisXZ);
+            m_D3DEffect.SetTexture(m_textureNormalMapForAxisXZ, (Texture)MyRender.GetDebugNormalTexture());// (Texture)voxelTexture.TextureNormalMapForAxisXZ);
+            m_D3DEffect.SetTexture(m_textureHeightMapForAxisXZ, (Texture)MyRender.GetDebugHeightTexture());// (Texture)voxelTexture.TextureHeightMapForAxisXZ);
+            m_D3DEffect.SetTexture(m_textureDiffuseForAxisY, (Texture)MyRender.GetDebugTexture());//  (Texture)voxelTexture.TextureDiffuseForAxisY);
+            m_D3DEffect.SetTexture(m_textureNormalMapForAxisY, (Texture)MyRender.GetDebugNormalTexture());//  (Texture)voxelTexture.TextureNormalMapForAxisY);
+            m_D3DEffect.SetTexture(m_textureHeightMapForAxisY, (Texture)MyRender.GetDebugHeightTexture());// (Texture)voxelTexture.TextureHeightMapForAxisY);
 
             m_D3DEffect.SetValue(m_specularIntensity, voxelMaterial.SpecularIntensity);
             m_D3DEffect.SetValue(m_specularPower, voxelMaterial.SpecularPower);
@@ -192,10 +217,12 @@ namespace MinerWars.AppCode.Game.Effects
                 MyVoxelMaterial voxelMaterial2 = MyVoxelMaterials.Get(mat1.Value);
                 MyVoxelMaterialTextures voxelTexture2 = voxelMaterial2.GetTextures();
 
-                m_D3DEffect.SetTexture(m_textureDiffuseForAxisXZ2, (Texture)voxelTexture2.TextureDiffuseForAxisXZ);
-                m_D3DEffect.SetTexture(m_textureNormalMapForAxisXZ2, (Texture)voxelTexture2.TextureNormalMapForAxisXZ);
-                m_D3DEffect.SetTexture(m_textureDiffuseForAxisY2, (Texture)voxelTexture2.TextureDiffuseForAxisY);
-                m_D3DEffect.SetTexture(m_textureNormalMapForAxisY2, (Texture)voxelTexture2.TextureNormalMapForAxisY);
+                m_D3DEffect.SetTexture(m_textureDiffuseForAxisXZ2, (Texture)MyRender.GetDebugTexture());//  (Texture)voxelTexture2.TextureDiffuseForAxisXZ);
+                m_D3DEffect.SetTexture(m_textureNormalMapForAxisXZ2, (Texture)MyRender.GetDebugNormalTexture());//  (Texture)voxelTexture2.TextureNormalMapForAxisXZ);
+                m_D3DEffect.SetTexture(m_textureHeightMapForAxisXZ2, (Texture)MyRender.GetDebugHeightTexture());// (Texture)voxelTexture2.TextureHeightMapForAxisXZ);
+                m_D3DEffect.SetTexture(m_textureDiffuseForAxisY2, (Texture)MyRender.GetDebugTexture());//  (Texture)voxelTexture2.TextureDiffuseForAxisY);
+                m_D3DEffect.SetTexture(m_textureNormalMapForAxisY2, (Texture)MyRender.GetDebugNormalTexture());//  (Texture)voxelTexture2.TextureNormalMapForAxisY);
+                m_D3DEffect.SetTexture(m_textureHeightMapForAxisY2, (Texture)MyRender.GetDebugHeightTexture());// (Texture)voxelTexture2.TextureHeightMapForAxisY);
 
                 m_D3DEffect.SetValue(m_specularIntensity2, voxelMaterial2.SpecularIntensity);
                 m_D3DEffect.SetValue(m_specularPower2, voxelMaterial2.SpecularPower);
@@ -209,10 +236,12 @@ namespace MinerWars.AppCode.Game.Effects
                 MyVoxelMaterial voxelMaterial3 = MyVoxelMaterials.Get(mat2.Value);
                 MyVoxelMaterialTextures voxelTexture3 = voxelMaterial3.GetTextures();
 
-                m_D3DEffect.SetTexture(m_textureDiffuseForAxisXZ3, (Texture)voxelTexture3.TextureDiffuseForAxisXZ);
-                m_D3DEffect.SetTexture(m_textureNormalMapForAxisXZ3, (Texture)voxelTexture3.TextureNormalMapForAxisXZ);
-                m_D3DEffect.SetTexture(m_textureDiffuseForAxisY3, (Texture)voxelTexture3.TextureDiffuseForAxisY);
-                m_D3DEffect.SetTexture(m_textureNormalMapForAxisY3, (Texture)voxelTexture3.TextureNormalMapForAxisY);
+                m_D3DEffect.SetTexture(m_textureDiffuseForAxisXZ3, (Texture)MyRender.GetDebugTexture());//  (Texture)voxelTexture3.TextureDiffuseForAxisXZ);
+                m_D3DEffect.SetTexture(m_textureNormalMapForAxisXZ3, (Texture)MyRender.GetDebugNormalTexture());//  (Texture)voxelTexture3.TextureNormalMapForAxisXZ);
+                m_D3DEffect.SetTexture(m_textureHeightMapForAxisXZ3, (Texture)MyRender.GetDebugHeightTexture());// (Texture)voxelTexture3.TextureHeightMapForAxisXZ);
+                m_D3DEffect.SetTexture(m_textureDiffuseForAxisY3, (Texture)MyRender.GetDebugTexture());//  (Texture)voxelTexture3.TextureDiffuseForAxisY);
+                m_D3DEffect.SetTexture(m_textureNormalMapForAxisY3, (Texture)MyRender.GetDebugNormalTexture());//  (Texture)voxelTexture3.TextureNormalMapForAxisY);
+                m_D3DEffect.SetTexture(m_textureHeightMapForAxisY3, (Texture)MyRender.GetDebugHeightTexture());// (Texture)voxelTexture3.TextureHeightMapForAxisY);
 
                 m_D3DEffect.SetValue(m_specularIntensity3, voxelMaterial3.SpecularIntensity);
                 m_D3DEffect.SetValue(m_specularPower3, voxelMaterial3.SpecularPower);

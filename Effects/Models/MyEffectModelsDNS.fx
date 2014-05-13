@@ -45,6 +45,15 @@ sampler TextureNormalSampler = sampler_state
 	AddressV = WRAP;
 };
 
+texture TextureHeight;
+sampler TextureHeightSampler = sampler_state
+{
+	texture = <TextureHeight>;
+	mipFilter = LINEAR;
+	AddressU = WRAP;
+	AddressV = WRAP;
+};
+
 /*
 Texture TextureMask;
 sampler TextureMaskSampler = sampler_state 
@@ -204,10 +213,24 @@ VertexShaderOutputLow_DNS VertexShaderFunctionLow_DNS_Base(VertexShaderInputLow_
     output.Position = mul(output.Position, ViewMatrix);
 	output.TexCoordAndViewDistance.z = -output.Position.z;
 	output.TexCoordAndViewDistance.w = length(output.Position.xyz);
-    output.Position = mul(output.Position, ProjectionMatrix);    
-	output.ScreenPosition = output.Position;
     output.TexCoordAndViewDistance.xy = input.TexCoord;
-	output.Normal =  normalize(mul(input.Normal.xyz, (float3x3)world));    
+	output.Normal =  normalize(mul(input.Normal.xyz, (float3x3)world));
+	output.TexCoordAndViewDistance.xy = input.TexCoord;
+
+	// Height Mapping
+	float depth = tex2Dlod(TextureHeightSampler, float4(input.TexCoord, 0, 0));
+	output.Position = output.Position + float4(mul(depth, output.Normal), 0);
+
+	output.Position = mul(output.Position, ProjectionMatrix);
+	output.ScreenPosition = output.Position;
+	
+	// Parallax Mapping
+	/*[branch] if (output.TexCoordAndViewDistance.w < PARALLAX_LIMIT) {
+		float depth = tex2Dlod(TextureHeightSampler, float4(input.TexCoord, 0, 0));
+		float3 normal = GetNormalVectorFromDDS(tex2Dlod(TextureNormalSampler, float4(input.TexCoord, 0, 0)));
+		float3 direction = ViewMatrix[1];
+		output.TexCoordAndViewDistance.xy = input.TexCoord + depth * float2();
+	}*/
 
     return output;
 }

@@ -277,10 +277,25 @@ namespace MinerWars.AppCode.Game.Render
                             }
                         }
 
+                        if (CheckHeightTextures)
+                        {
+                            if (!shader.IsTextureHeightSet())
+                            {
+                                LazyLoadDebugTextures();
+
+                                shader.SetTextureHeight(m_debugHeightTexture);
+                            }
+                        }
+
                         if (!shader.IsTextureNormalSet())
                         {
                             LazyLoadDebugTextures();
                             shader.SetTextureNormal(m_debugTexture);
+                        }
+                        if (!shader.IsTextureHeightSet())
+                        {
+                            LazyLoadDebugTextures();
+                            shader.SetTextureHeight(m_debugHeightTexture);
                         }
 
                     }

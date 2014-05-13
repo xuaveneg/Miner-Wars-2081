@@ -475,8 +475,9 @@ namespace MinerWars.AppCode.Game.Render
 
         public static bool SkipVoxels = false;
 
-        public static bool DebugDiffuseTexture = false;
-        public static bool DebugNormalTexture = false;
+        public static bool DebugDiffuseTexture = true;
+        public static bool DebugNormalTexture = true;
+        public static bool DebugHeightTexture = true;
 
 
         public static Vector3 AmbientColor;
@@ -534,6 +535,7 @@ namespace MinerWars.AppCode.Game.Render
 
         public static bool CheckDiffuseTextures = true;
         public static bool CheckNormalTextures = false;
+        public static bool CheckHeightTextures = false;
 
         public static bool ShowSpecularIntensity = false;
         public static bool ShowSpecularPower = false;
@@ -642,6 +644,7 @@ namespace MinerWars.AppCode.Game.Render
         //Texture for debug rendering
         static MyTexture2D m_debugTexture;
         static MyTexture2D m_debugNormalTexture;
+        static MyTexture2D m_debugHeightTexture;
         static MyTexture2D m_debugNormalTextureBump;
         //static RenderTarget2D m_screenshot;
 

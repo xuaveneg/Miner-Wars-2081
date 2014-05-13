@@ -748,7 +748,7 @@ namespace MinerWars.AppCode.Game.Render
         }
 
 
-        private static MyMeshMaterial m_emptyMaterial = new MyMeshMaterial("", "", null, null);
+        private static MyMeshMaterial m_emptyMaterial = new MyMeshMaterial("", "", null, null, null);
 
         private static void DrawRenderElements(List<MyRenderElement> renderElements, bool applyStencil, out int ibChangesStats)
         {
@@ -1172,6 +1172,12 @@ namespace MinerWars.AppCode.Game.Render
             return m_debugNormalTexture;
         }
 
+        internal static MyTexture2D GetDebugHeightTexture()
+        {
+            LazyLoadDebugTextures();
+            return m_debugHeightTexture;
+        }
+
         internal static MyTexture2D GetDebugNormalTextureBump()
         {
             LazyLoadDebugTextures();
@@ -1197,6 +1203,7 @@ namespace MinerWars.AppCode.Game.Render
                         {
                             shader.SetTextureDiffuse(material.DiffuseTexture);
                             shader.SetTextureNormal(material.NormalTexture);
+                            shader.SetTextureHeight(material.HeightTexture);
 
                             //Do we need this? Graphicians dont use this
                             //shader.SetDiffuseColor(material.DiffuseColor);
@@ -1263,11 +1270,25 @@ namespace MinerWars.AppCode.Game.Render
                                 shader.SetEmissivity(0);
                             }
                         }
+                        if (CheckHeightTextures)
+                        {
+                            if (!shader.IsTextureHeightSet())
+                            {
+                                LazyLoadDebugTextures();
+
+                                shader.SetTextureHeight(m_debugHeightTexture);
+                            }
+                        }
 
                         if (!shader.IsTextureNormalSet())
                         {
                             LazyLoadDebugTextures();
                             shader.SetTextureNormal(m_debugTexture);
+                        }
+                        if (!shader.IsTextureHeightSet())
+                        {
+                            LazyLoadDebugTextures();
+                            shader.SetTextureHeight(m_debugHeightTexture);
                         }
 
 
@@ -1323,7 +1344,11 @@ namespace MinerWars.AppCode.Game.Render
             }
             if (m_debugNormalTexture == null)
             {
-                m_debugNormalTexture = MyTextureManager.GetTexture<MyTexture2D>("Textures2\\Models\\fake_ns");
+                m_debugNormalTexture = MyTextureManager.GetTexture<MyTexture2D>("Textures2\\Models\\Debug\\debug_ns");//fake_ns");
+            }
+            if (m_debugHeightTexture == null)
+            {
+                m_debugHeightTexture = MyTextureManager.GetTexture<MyTexture2D>("Textures2\\Models\\Debug\\debug_h");
             }
             if (m_debugNormalTextureBump == null)
             {

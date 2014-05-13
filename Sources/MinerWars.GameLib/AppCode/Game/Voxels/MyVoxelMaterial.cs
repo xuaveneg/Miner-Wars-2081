@@ -17,6 +17,8 @@ namespace MinerWars.AppCode.Game.Voxels
         public MyTexture2D TextureDiffuseForAxisY;
         public MyTexture2D TextureNormalMapForAxisXZ;
         public MyTexture2D TextureNormalMapForAxisY;
+        public MyTexture2D TextureHeightMapForAxisXZ;
+        public MyTexture2D TextureHeightMapForAxisY;
     }
 
     class MyVoxelMaterial
@@ -76,6 +78,11 @@ namespace MinerWars.AppCode.Game.Voxels
                     //  Normal map XZ
                     m_textures.TextureNormalMapForAxisXZ = MyTextureManager.GetTexture<MyTexture2D>("Textures\\Voxels\\" + m_assetName + "_ForAxisXZ_ns" + (m_hasBuilderVersion ? "_mw" : ""), null, LoadingMode.Lazy);
                 }
+                if (Render.MyRenderConstants.RenderQualityProfile.UseHeight)
+                {
+                    // Height map XZ
+                    m_textures.TextureHeightMapForAxisXZ = MyTextureManager.GetTexture<MyTexture2D>("Textures\\Voxels\\" + m_assetName + "_ForAxisXZ_h" + (m_hasBuilderVersion ? "_mw" : ""), null, LoadingMode.Lazy);
+                }
 
                 //  Diffuse Y
                 if (UseTwoTextures)
@@ -92,6 +99,12 @@ namespace MinerWars.AppCode.Game.Voxels
                     //  Normal map Y
                     m_textures.TextureNormalMapForAxisY = UseTwoTextures ? MyTextureManager.GetTexture<MyTexture2D>("Textures\\Voxels\\" + m_assetName + "_ForAxisY_ns" + (m_hasBuilderVersion ? "_mw" : ""), null, LoadingMode.LazyBackground) : m_textures.TextureNormalMapForAxisXZ;
                 }
+                if (Render.MyRenderConstants.RenderQualityProfile.UseHeight)
+                {
+                    // Height map Y
+                    m_textures.TextureHeightMapForAxisY = UseTwoTextures ? MyTextureManager.GetTexture<MyTexture2D>("Textures\\Voxels\\" + m_assetName + "_ForAxisY_h" + (m_hasBuilderVersion ? "_mw" : ""), null, LoadingMode.Lazy) : m_textures.TextureHeightMapForAxisXZ;
+                }
+                
                     /*
                 CheckTexture(m_textures.TextureDiffuseForAxisXZ);
                 CheckTexture(m_textures.TextureDiffuseForAxisY);

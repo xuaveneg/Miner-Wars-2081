@@ -65,6 +65,7 @@ namespace MinerWars.AppCode.Game.GUI
 
             AddCheckBox(new StringBuilder("Debug diffuse texture"), null, MemberHelper.GetMember(() => MyRender.DebugDiffuseTexture));
             AddCheckBox(new StringBuilder("Debug normal texture"), null, MemberHelper.GetMember(() => MyRender.DebugNormalTexture));
+            AddCheckBox(new StringBuilder("Debug height texture"), null, MemberHelper.GetMember(() => MyRender.DebugHeightTexture));
 
             m_currentPosition.Y += 0.01f;
             AddLabel(new StringBuilder("Clip planes"), Color.Yellow.ToVector4(), 1.2f);

@@ -35,16 +35,22 @@ Texture TextureDiffuseForAxisXZ;
 Texture TextureDiffuseForAxisY;
 Texture TextureNormalMapForAxisXZ;
 Texture TextureNormalMapForAxisY;
+Texture TextureHeightMapForAxisXZ;
+Texture TextureHeightMapForAxisY;
 
 Texture TextureDiffuseForAxisXZ2;
 Texture TextureDiffuseForAxisY2;
 Texture TextureNormalMapForAxisXZ2;
 Texture TextureNormalMapForAxisY2;
+Texture TextureHeightMapForAxisXZ2;
+Texture TextureHeightMapForAxisY2;
 
 Texture TextureDiffuseForAxisXZ3;
 Texture TextureDiffuseForAxisY3;
 Texture TextureNormalMapForAxisXZ3;
 Texture TextureNormalMapForAxisY3;
+Texture TextureHeightMapForAxisXZ3;
+Texture TextureHeightMapForAxisY3;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //	Texture samplers
@@ -152,6 +158,60 @@ sampler TextureNormalMapForAxisYSampler[3] =
 	sampler_state
 	{
 		texture = <TextureNormalMapForAxisY3> ; 
+		mipfilter = LINEAR; 
+		AddressU = WRAP; 
+		AddressV = WRAP;
+	}
+};
+
+sampler TextureHeightMapForAxisXZSampler[3] =
+{
+	sampler_state
+	{
+		texture = <TextureHeightMapForAxisXZ> ; 
+		mipfilter = LINEAR; 
+		AddressU = WRAP; 
+		AddressV = WRAP;
+	},
+
+	sampler_state
+	{
+		texture = <TextureHeightMapForAxisXZ2> ; 
+		mipfilter = LINEAR; 
+		AddressU = WRAP; 
+		AddressV = WRAP;
+	},
+
+	sampler_state
+	{
+		texture = <TextureHeightMapForAxisXZ3> ; 
+		mipfilter = LINEAR; 
+		AddressU = WRAP; 
+		AddressV = WRAP;
+	}
+};
+
+sampler TextureHeightMapForAxisYSampler[3] =
+{ 
+	sampler_state
+	{
+		texture = <TextureHeightMapForAxisY> ; 
+		mipfilter = LINEAR; 
+		AddressU = WRAP; 
+		AddressV = WRAP;
+	},
+
+	sampler_state
+	{
+		texture = <TextureHeightMapForAxisY2> ; 
+		mipfilter = LINEAR; 
+		AddressU = WRAP; 
+		AddressV = WRAP;
+	},
+
+	sampler_state
+	{
+		texture = <TextureHeightMapForAxisY3> ; 
 		mipfilter = LINEAR; 
 		AddressU = WRAP; 
 		AddressV = WRAP;
